@@ -34,6 +34,26 @@ def gradient_descent_runner(points, starting_b, starting_m, learning_rate, num_i
         b, m = step_gradient(b, m, array(points), learning_rate)
     return [b, m]
 
+
+def plot_the_output(b, m, points):
+    b = b*10
+    m = m* 10
+    b = int(b)
+    m = int(m)
+    b = b/10
+    m = m/10
+    res = Fraction(m).limit_denominator()
+    den = res.denominator
+    num = res.numerator
+    print("Numerator : {}    Denominator : {}".format(num,den))
+    mul = 20
+    x = [0,den*mul]
+    y = [b*mul,num*mul]
+    plt.title("Gradient Descent : Final Line")
+    plt.scatter(points[:, 0],points[:, 1])
+    plt.plot(x,y, color='r')
+    plt.show()
+
 def run():
     points = genfromtxt("data.csv", delimiter=",")
     learning_rate = 0.0001
@@ -45,27 +65,10 @@ def run():
     [b, m] = gradient_descent_runner(points, initial_b, initial_m, learning_rate, num_iterations)
     print("After {0} iterations b = {1}, m = {2}, error = {3}".format(num_iterations, b, m, compute_error_for_line_given_points(b, m, points)))
     points = array(points)
+
+    plot_the_output(b, m, points)
     
-    b = b*10
-    m = m* 10
-    b = int(b)
-    m = int(m)
-    b = b/10
-    m = m/10
-    res = Fraction(m).limit_denominator()
-    den = res.denominator
-    num = res.numerator
-    mul = 20
-    x = [0,den*mul]
-    y = [b*mul,num*mul]
-    plt.title("Gradient Descent : Final Line")
-    plt.scatter(points[:, 0],points[:, 1])
-    plt.plot(x,y, color='r')
-    plt.show()
-    
-    
-    
+
 	
 if __name__ == '__main__':
     run()
-
